@@ -1,5 +1,5 @@
 # great-debate
-[Join the debate today](i6.cims.nyu.edu:14114/home)
+[Join the debate today](http://i6.cims.nyu.edu:14114/home)
 
 
 A web app build on expressjs with the help of:
