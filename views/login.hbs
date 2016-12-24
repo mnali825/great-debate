@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col s12 m6 l4 push-m3 push-l4">
+    <div class="login card-panel">
+      <h2>Login</h2>
+      <p style="color:#B1463C;">{{message}}</p>
+      <form id="login-form" method="POST" action="">
+        <div class="input-field col s12">
+          <input id="user" name="username" type="text" style="text-align:center"> 
+          <label for="username">username</label> 
+        </div>
+        <div class="input-field col s12">
+          <input id="password-box" name="password" type="password" style="text-align:center">
+          <label for="password-box">password</label>
+          <input type="submit" style="display:none;"> 
+        </div>
+      </form>
+      <a class="waves-effect waves-light btn-large" onclick="document.getElementById('login-form').submit();"><div>Login</div></a>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', init);
+
+  function init() {
+    var passwordBox = document.getElementById('password-box');
+    passwordBox.addEventListener('keyUp', handleLogin);
+
+    var userinput = document.getElementById('user');
+    var passinput = document.getElementById('password-box');
+
+    userinput.addEventListener('click', handleBoxColor);
+    passinput.addEventListener('click', handleBoxColor);
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      document.getElementById('login-form').submit();
+    }
+  }
+
+  function handleBoxColor(event) {
+    // this.classList.add('selected');
+  }
+</script>

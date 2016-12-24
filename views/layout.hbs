@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>great debate</title>
+    <link rel='stylesheet' href='/stylesheets/materialize.min.css' />
+    <link rel='stylesheet' href='/stylesheets/base.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="/home" class="brand-logo">great debate</a>
+          <ul class="right hide-on-med-and-down">
+            {{#if user}}
+            <li>Welcome {{user.username}}</li>
+            {{else}}
+            <li><a href="/registration">register</a></li>
+            <li><a href="/">login</a></li>
+            {{/if}}
+          </ul>
+        </div>
+      </nav>
+    </div>
+        
+    {{{body}}}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+  </body>
+</html>

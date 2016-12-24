@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col s12 m6 l4 push-m3 push-l4">
+    <div class="login card-panel">
+      <h2>Register</h2>
+      <p style="color:#B1463C;">{{message}}</p>
+      <form id="registration-form" method="POST" action="">
+        <div class="input-field col s12">
+          <input id="user" name="username" type="text" style="text-align:center"> 
+          <label for="username">username</label> 
+        </div>
+        <div class="input-field col s12">
+          <input id="password-box" name="password" type="password" style="text-align:center">
+          <label for="password-box">password</label>
+          <input type="submit" style="display:none;"> 
+        </div>
+      </form>
+      <a class="waves-effect waves-light btn-large" onclick="document.getElementById('registration-form').submit();"><div>Register</div></a>
+    </div>
+  </div>
+</div>

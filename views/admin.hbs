@@ -1,0 +1,30 @@
+<!-- <center>
+<form id="topic-form" method="post">
+  <p>Title</p>
+  <input type="text" name="topic">
+  <p>Description</p>
+  <input type="text" name="definition">
+</form>
+<a class="btn" onclick="document.getElementById('topic-form').submit();"><div>Add Topic</div></a>
+</center> -->
+
+
+<div class="row">
+  <div class="col s12 m6 l4 push-m3 push-l4">
+    <div class="login card-panel">
+      <h2>Add a Topic</h2>
+      <form id="topic-form" method="POST" action="">
+        <div class="input-field col s12">
+          <input name="topic" type="text"> 
+          <label for="topic">Title</label> 
+        </div>
+        <div class="input-field col s12">
+          <input name="definition" type="text" style="text-align:center">
+          <label for="password">Description</label>
+          <input type="submit" style="display:none;"> 
+        </div>
+      </form>
+      <a class="waves-effect waves-light btn-large" onclick="document.getElementById('topic-form').submit();"><div>Add</div></a>
+    </div>
+  </div>
+</div>

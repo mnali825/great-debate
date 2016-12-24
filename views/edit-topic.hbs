@@ -1,0 +1,235 @@
+<div class="container">
+
+  <h3 id="topic" class="center">{{topic.topic}}</h3>
+  <p class="definition">{{topic.definition}}</p>
+
+  <div class="splitbar">
+    <div class="for-bar" id="for-bar">{{topic.affirmative.length}}</div>
+    <div class="against-bar" id="against-bar">{{topic.negative.length}}</div>
+  </div>
+
+  <div class="row">
+
+    <div class="col l6">
+      <h5 class="center">Affirmative</h5>
+      <div id="affirmative-posts" class="comments">
+        {{#each topic.affirmative}}
+        <div class="card-panel comment">
+          <p class="username">{{user}} <i class="like fa fa-hand-peace-o">&nbsp;{{likes}}</i></p>
+          <form id="like-aff-form" method="post">
+            <p class="argument">{{argument}}</p>
+            <input type="hidden" name="id" value="{{_id}}">
+            <input type="hidden" name="arg-type" value="affirmative">
+          </form> 
+          <p class="date"> - {{time}}</p>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="col l6">
+      <h5 class="center">Negative</h5>
+      <div id="negative-posts" class="comments">
+        {{#each topic.negative}}
+        <div class="card-panel comment">
+          <p class="username">{{user}}</p>
+          <form id="like-neg-form" method="post">
+            <p class="argument">{{argument}}</p>
+            <input type="hidden" name="id" value="{{_id}}">
+            <input type="hidden" name="arg-type" value="negative">
+          </form> 
+          <p class="date"><i class="like fa fa-hand-peace-o">&nbsp;{{likes}}</i> {{time}}</p>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row arguments center">
+    <div class="col s6">
+      {{#if user}}
+      <a id="add-affirmative-argument" class="waves-effect waves-light btn-large add-arg">Add Argument</a>
+      {{else}}
+      <a href="/" class="waves-effect waves-light btn-large add-arg">Login to Debate</a>
+      {{/if}}
+      <form id="affirmative-form" class="argument-form hidden" method="post">
+        <div class="input-field col s12">
+          <input type="text" name="affirmative-argument">
+          <input type="hidden" name="username" value="{{user.username}}">
+        </div>
+        <div class="input-field col s12 add-arg center">
+          <p><input class="btn-large half" type="submit" value="Add Argument" id="aff-post">
+          <input class="btn-large half" type="button" id="cancel-aff" value="Cancel"></p>
+        </div>
+      </form>
+    </div>
+    <div class="col s6">
+      {{#if user}}
+      <a id="add-negative-argument" class="waves-effect waves-light btn-large add-arg">Add Argument</a>
+      {{else}}
+      <a href="/" class="waves-effect waves-light btn-large add-arg">Login to Debate</a>
+      
+      {{/if}}
+      <form id="negative-form" class="argument-form hidden" method="post">
+        <div class="input-field col s12">
+          <input type="text" name="negative-argument">
+          <input type="hidden" name="username" value="{{user.username}}">
+        </div>
+        <div class="input-field col s12 add-arg center">
+          <p><input class="btn-large half" type="submit" value="Add Argument" id="neg-post">
+          <input class="btn-large half" type="button" id="cancel-neg" value="Cancel"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <input type="hidden" id="num-for" value="{{topic.affirmative.length}}">
+  <input type="hidden" id="num-against" value="{{topic.negative.length}}">
+
+</div>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', main);
+  function main() {
+    var affbtn = document.getElementById('add-affirmative-argument');
+    var negbtn = document.getElementById('add-negative-argument');    
+    var addAffBtn = document.getElementById('aff-post');
+    var addNegBtn = document.getElementById('neg-post');
+    var cancelAff = document.getElementById('cancel-aff');
+    var cancelNeg = document.getElementById('cancel-neg');
+    var likes = document.getElementsByClassName('like');
+
+    var numfor = document.getElementById('num-for').value;
+    var numagainst = document.getElementById('num-against').value;
+
+    var totalPosts = Number(numfor) + Number(numagainst);
+    var ratioFor = Number(numfor) / totalPosts;
+    var ratioAgainst = Number(numagainst) / totalPosts;
+
+    var forbar = document.getElementById('for-bar');
+    var againstbar = document.getElementById('against-bar');
+    if (numfor == 0 && numagainst == 0) {
+      forbar.style.width =  "50%";
+      againstbar.style.width = "50%";
+    } else {
+      forbar.style.width = ratioFor*100 + "%";
+      againstbar.style.width = ratioAgainst*100 + "%";  
+    }
+
+    if (affbtn) {
+      affbtn.addEventListener('click', addAffPost);
+      negbtn.addEventListener('click', addNegPost);  
+    }
+    
+    addAffBtn.addEventListener('click', postAff);
+    addNegBtn.addEventListener('click', postNeg);
+    cancelAff.addEventListener('click', postAff);
+    cancelNeg.addEventListener('click', postNeg);
+    Array.prototype.forEach.call(likes, function(like) {
+      like.addEventListener('click', handleLike);
+    });
+  }
+ 
+  function addAffPost(event) {
+    var affbtn = document.getElementById('add-affirmative-argument');
+    var affForm = document.getElementById('affirmative-form');
+    affbtn.classList.add('hidden');
+    affForm.classList.remove('hidden');
+  }
+
+  function addNegPost(event) {
+    var negbtn = document.getElementById('add-negative-argument');
+    var negForm = document.getElementById('negative-form');
+    negbtn.classList.add('hidden');
+    negForm.classList.remove('hidden');
+  }
+
+  function postAff(event) {
+    // event.stopPropagation();
+    // console.log("THIS IS A AFF POST");
+    // event.preventDefault();
+    var affbtn = document.getElementById('add-affirmative-argument');
+    var affForm = document.getElementById('affirmative-form');
+    affbtn.classList.remove('hidden');
+    affForm.classList.add('hidden');
+    // var username = document.getElementById('username').value;
+    // var argument = document.getElementById('affirmative-argument').value;
+    // var topic = document.getElementById('topic').textContent;
+
+    // var req = new XMLHttpRequest();
+    // req.open('post', 'http://localhost:3000/api/comments/create', true);
+    // req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    // req.send('type='+'affirmative'+'&'+'argument='+argument+'&'+'username='+username+'&'+'topic='+topic);
+
+    // var postsDiv = document.getElementById('negative-posts');
+    // var div = document.createElement('div').classList.add('card-panel', 'comment');
+    // var usertag = document.createElement('p').classList.add('username');
+    // console.log('is this the problem');
+    // usertag.textContent = username;
+    // console.log('or something past this');
+    // var likes = document.createElement('i').classList.add('like', 'fa', 'fa-hand-peace-o');
+    // likes.textContent = 0;
+    // usertag.appendChild(likes);
+    // div.appendChild(usertag);
+    // var form = document.createElement('form').setAttribute('id', 'like-aff-form');
+    // form.setAttribute('method', 'post');
+    // var idinput = document.createElement('input').value= somevalue;
+    // form.appendChild(idinput);
+    // div.appendChild(form);
+    // postsDiv.appendChild(div);
+
+    // <form id="like-aff-form" method="post">
+    //   <p class="argument">{{argument}}</p>
+    //   <input type="hidden" name="id" value="{{_id}}">
+    //   <input type="hidden" name="arg-type" value="affirmative">
+    // </form> 
+    // <p class="date"> - {{time}}</p>
+
+  }
+
+
+
+  function postNeg(event) {
+    // event.stopPropagation();
+    console.log("THIS IS A NEG POST");
+    // event.preventDefault();
+    var negbtn = document.getElementById('add-negative-argument');
+    var negForm = document.getElementById('negative-form');
+    negbtn.classList.remove('hidden');
+    negForm.classList.add('hidden');
+    // var username = document.getElementById('username').value;
+    // var argument = document.getElementById('negative-argument').value;
+    // var topic = document.getElementById('topic').textContent;
+
+    // var req = new XMLHttpRequest();
+    // req.open('post', 'http://localhost:3000/api/comments/create', true);
+    // req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    // req.send('type='+'negative'+'&'+'argument='+argument+'&'+'username='+username+'&'+'topic='+topic);
+
+    // var postsDiv = document.getElementById('negative-posts');
+  }
+
+  function handleLike(event) {
+    var req = new XMLHttpRequest();
+    req.open('POST', 'http://localhost:3000/like/post', true);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    var likes = Number(this.textContent);
+    console.log('likes ', likes);
+    var id = this.parentNode.parentNode.childNodes[3].childNodes[3].value;
+    var topic = document.getElementById('topic').textContent;
+    var argtype = this.parentNode.parentNode.childNodes[3].childNodes[5].value;
+    console.log('this argtype doe: ', argtype);
+    if (this.classList.contains('liked')) {
+      likes--;
+      this.textContent = ' '+likes;
+      console.log(likes);
+    } else {
+      likes++;
+      this.textContent = ' '+likes;
+      console.log(likes);
+    }
+    this.classList.toggle('liked');
+    req.send('id='+id+'&'+'likes='+likes+'&'+'topic='+topic+'&'+'type='+argtype);
+  }
+
+</script>

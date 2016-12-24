@@ -1,0 +1,73 @@
+<div class="body">
+{{#each topic}}
+<div class="col s12 m7">
+  <div class="card horizontal" style="position:relative">
+    <!-- <div class="card-image">
+      <img src="http://lorempixel.com/100/190/nature/6">
+    </div> -->
+    <div class="card-stacked">
+      <div class="card-content"">
+
+        <div class="container">
+
+          <h4 class="center"><a href="/topics/{{slug}}">{{topic}}</a></h4>
+          <p class="center">{{definition}}</p>
+          <div class="row">
+            <!-- <p class="center small-header">Top Posts</p> -->
+            <div class="col s12 l6">
+              <div class="top-post card-panel comment">
+                <i class="like fa fa-hand-peace-o">&nbsp;{{affirmative.0.likes}}</i>
+                <p class="user">{{affirmative.0.user}}</p>
+                <p class="top-arg truncate"><em><q>{{affirmative.0.argument}}</q></em> </p>
+              </div>
+            </div>
+            <div class="col s12 l6">
+              <div class="top-post card-panel comment"\>
+                <i class="like fa fa-hand-peace-o">&nbsp;{{negative.0.likes}}</i>
+                <p class="user">{{negative.0.user}}</p>
+                <p class="top-arg truncate"> <em><q>{{negative.0.argument}}</q></em></p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        
+      </div>
+
+
+    </div>
+    <div style="position:absolute; right:25px; padding:10px"><p><span class="aff-num">{{affirmative.length}}</span> <span class="neg-num">{{negative.length}}</span></p></div>
+  </div>
+</div>
+{{/each}}
+</div>
+
+<!-- 
+<div id="topics">
+  {{#each topic}}
+  <div class="topic">
+
+    <h1><a href="/topics/{{slug}}">{{topic}}</a></h1>
+    <p id="definition">{{definition}}</p>
+    
+    <div class="top-comment">
+      <div class="half">
+        <div class="comment">
+          <p><em><q>{{affirmative.0.argument}}</q></em></p>
+          <p>{{affirmative.0.user}} <i class="fa fa-hand-peace-o">&nbsp;{{affirmative.0.likes}}</i></p>
+        </div>
+      </div>
+      <div class="half">
+        <div class="comment">
+          <p><em><q>{{negative.0.argument}}</q></em></p>
+          <p>{{negative.0.user}} <i class="fa fa-hand-peace-o">&nbsp;{{negative.0.likes}}</i></p>
+        </div>
+      </div>
+    </div>
+    <a href="/topics/{{slug}}"><button class="button">See Arguments</button></a>
+  </div>
+  {{/each}}
+</div>
+
+ -->
